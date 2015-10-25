@@ -12,6 +12,6 @@
 class ILoger{
 public:
     virtual ~ILoger(){};
-    virtual void log(const char* str,...) = 0;
+    virtual void log(const char* str,va_list args) = 0;
 };
 #endif /* defined(__testproject__ILoger__) */

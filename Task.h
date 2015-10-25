@@ -18,7 +18,7 @@ private:
     Statu _statu;
     std::string _name;
 public:
-    Task(TaskRunnable& runnable);
+    Task(const std::string& name,TaskRunnable& runnable);
     ~Task();
     void start();
     /**
@@ -26,7 +26,7 @@ public:
      */
     void cancel();
     void setName(const std::string& name);
-    
+    std::string getName();
 
 };
 

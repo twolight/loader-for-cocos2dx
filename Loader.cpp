@@ -9,6 +9,7 @@
 #include "Loader.h"
 #include "LogerProxy.h"
 #include <future>
+using namespace std;
 Loader* Loader::_instance = nullptr;
 Loader* Loader::getInstance(){
     if(_instance == nullptr){
@@ -26,25 +27,26 @@ _statu(Statu::PENDING){
     
 }
 Loader::~Loader(){
-    for(auto wave : _waves){
+    for(auto iterator = _waves.begin();iterator != _waves.end();iterator++){
+        Wave* wave = iterator->second;
         if(wave){
             delete wave;
         }
     }
     _waves.clear();
 }
-Loader* Loader::addTask(const std::string& taskName,Task* task,unsigned waveIndex){
+Loader* Loader::addTask(Task* task,unsigned waveIndex){
     if(task != nullptr){
         Wave* wave;
-        if(waveIndex < _waves.size()){
-            wave = _waves[waveIndex];
-            
+        auto iterator = _waves.find(waveIndex);
+        if(iterator != _waves.end()){
+            wave = iterator->second;
         }else{
             wave = new Wave();
+            _waves.insert(make_pair(waveIndex,wave));
         }
         wave->addTask(task);
     }
-    task->setName(taskName);
     return this;
 }
 void Loader::cancelTask(const std::string& taskName){
@@ -53,7 +55,8 @@ void Loader::cancelTask(const std::string& taskName){
 }
 
 void Loader::clearTask(){
-    for(auto wave : _waves){
+    for(auto iterator = _waves.begin();iterator != _waves.end();iterator++){
+        Wave* wave = iterator->second;
         if(wave){
             delete wave;
         }
@@ -67,18 +70,18 @@ void Loader::start(){
     }
     _statu = Statu::RUNNING;
     clock_t startTime = clock();
-    std::future<bool> result = std::async(std::launch::deferred,[this](){
-        for(auto wave : _waves){
-            wave->start();
+    std::future<bool> result = std::async(std::launch::async,[this](){
+        for(auto& wave : _waves){
+            wave.second->start();
         }
         return true;
     });
-    if(result.get()){
-        //Loader load done.
-        
-    }
+//    if(result.get()){
+//        //Loader load done.
+//    }
     clock_t endTime = clock();
-    LogerProxy::printf("Loader done runs: %d millis",startTime-endTime);
+    std::printf("Loader done runs: %ld millis \r\n",(endTime - startTime));
+    //LogerProxy::printf("Loader done runs: %ld millis",(endTime - startTime));
     _statu = Statu::COMPLETE;
 }
 void Loader::setLoger(ILoger* loger){

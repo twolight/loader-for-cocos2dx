@@ -15,7 +15,7 @@
 class Loader{
 private:
     static Loader* _instance;
-    std::vector<Wave*> _waves;
+    std::map<int,Wave*> _waves;
     Statu _statu;
     Loader();
     ~Loader();
@@ -31,7 +31,7 @@ public:
      *
      *  @return Loader point.
      */
-    Loader* addTask(const std::string& taskName,Task* task,unsigned wave);
+    Loader* addTask(Task* task,unsigned wave);
     
     /**
      *  Cancel a task by taskName.

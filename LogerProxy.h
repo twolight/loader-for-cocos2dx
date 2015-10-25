@@ -15,7 +15,7 @@ private:
     static ILoger* _logerImpl;
     LogerProxy();
     static void release();
-    void log(const char* str,...) override;
+    void log(const char* str,va_list args) override;
 public:
     static void printf(const char* str,...);
     static void setLoger(ILoger* loger);

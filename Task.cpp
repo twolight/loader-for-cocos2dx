@@ -9,11 +9,12 @@
 #include "Task.h"
 
 using namespace std;
-Task::Task(TaskRunnable& runnable):
+Task::Task(const std::string& name,TaskRunnable& runnable):
 _statu(Statu::PENDING),
 _isCancel(false),
 _runnable(runnable),
-_thread(nullptr){
+_thread(nullptr),
+_name(name){
     
 }
 Task::~Task(){
@@ -22,10 +23,10 @@ Task::~Task(){
     }
 }
 void Task::start(){
-    if(_isCancel){
+    if(!_isCancel){
         _statu = Statu::RUNNING;
         _thread = new std::thread(_runnable);
-        _thread->detach();
+        _thread->join();
     }
 }
 /**
@@ -33,4 +34,10 @@ void Task::start(){
  */
 void Task::cancel(){
     _isCancel = true;
+}
+void Task::setName(const std::string &name){
+    _name = name;
+}
+std::string Task::getName(){
+    return _name;
 }
