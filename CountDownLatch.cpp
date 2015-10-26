@@ -20,7 +20,6 @@ void CountDownLatch::countDown(){
     if(_count == 0){
         _condition.notify_all();
     }
-    lock.unlock();
 }
 int CountDownLatch::getCount(){
     std::unique_lock<std::mutex> lock(_mutex);

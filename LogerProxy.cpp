@@ -15,23 +15,27 @@ LogerProxy::LogerProxy(){
 void LogerProxy::setLoger(ILoger* loger){
     _loger = loger;
 }
-void LogerProxy::printf(const char* str,...){
+void LogerProxy::printf(const char* formate,...){
+    int length = 1024;
+    char buf[length];
+    int result = -1;
     va_list args;
-    va_start(args, str);
-//    if(_loger){
-//        _loger->log(str,args);
-//    }else{
-//        if(!_logerImpl){
-//            _logerImpl = new LogerProxy();
-//        }
-//        _logerImpl->log(str,args);
-//    }
-    
+    va_start(args,formate);
+    result = vsnprintf(buf,length,formate, args);
     va_end(args);
-    std::printf(str,args);
+    if(result >= 0){
+        if(_loger){
+            _loger->log(buf);
+        }else{
+            if(!_logerImpl){
+                _logerImpl = new LogerProxy();
+            }
+            _logerImpl->log(buf);
+        }
+    }
 }
-void LogerProxy::log(const char* str,va_list args){
-    std::printf(str,args);
+void LogerProxy::log(const char* str){
+    std::printf("%s\r\n",str);
 }
 void LogerProxy::release(){
     if(_loger){

@@ -69,7 +69,6 @@ void Loader::start(){
         return;
     }
     _statu = Statu::RUNNING;
-    clock_t startTime = clock();
     std::future<bool> result = std::async(std::launch::async,[this](){
         for(auto& wave : _waves){
             wave.second->start();
@@ -79,9 +78,6 @@ void Loader::start(){
 //    if(result.get()){
 //        //Loader load done.
 //    }
-    clock_t endTime = clock();
-    std::printf("Loader done runs: %ld millis \r\n",(endTime - startTime));
-    //LogerProxy::printf("Loader done runs: %ld millis",(endTime - startTime));
     _statu = Statu::COMPLETE;
 }
 void Loader::setLoger(ILoger* loger){
