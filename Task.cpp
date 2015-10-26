@@ -14,7 +14,8 @@ _statu(Statu::PENDING),
 _isCancel(false),
 _runnable(runnable),
 _thread(nullptr),
-_name(name){
+_name(name),
+_doneSignal(nullptr){
     
 }
 Task::~Task(){
@@ -25,8 +26,11 @@ Task::~Task(){
 void Task::start(){
     if(!_isCancel){
         _statu = Statu::RUNNING;
-        _thread = new std::thread(_runnable);
-        _thread->join();
+        _thread = new std::thread([this](){
+            _runnable();
+            _doneSignal->countDown();
+        });
+        _thread->detach();
     }
 }
 /**
@@ -40,4 +44,7 @@ void Task::setName(const std::string &name){
 }
 std::string Task::getName(){
     return _name;
+}
+void Task::setDownSignal(CountDownLatch* doneSignal){
+    _doneSignal = doneSignal;
 }
