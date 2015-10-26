@@ -21,6 +21,7 @@ void Loader::destroy(){
     if(_instance){
         delete _instance;
     }
+    LogerProxy::destroy();
 }
 Loader::Loader():
 _statu(Statu::PENDING){

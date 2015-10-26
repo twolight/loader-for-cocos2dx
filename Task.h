@@ -22,13 +22,31 @@ private:
 public:
     Task(const std::string& name,TaskRunnable& runnable);
     ~Task();
+    /**
+     *  Task start.
+     */
     void start();
     /**
-     *  Description
+     *  Cancel task
      */
     void cancel();
+    /**
+     *  Set a unique name for task
+     *
+     *  @param name Name string.
+     */
     void setName(const std::string& name);
+    /**
+     *  Get task's name.
+     *
+     *  @return return Task name string.
+     */
     std::string getName();
+    /**
+     *  Task set a signal in order to notify the wave when the task finish.
+     *
+     *  @param _doneSignal CountDownLatch Object.
+     */
     void setDownSignal(CountDownLatch* _doneSignal);
 
 };

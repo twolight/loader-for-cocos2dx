@@ -14,10 +14,25 @@ private:
     static ILoger* _loger;
     static ILoger* _logerImpl;
     LogerProxy();
-    static void release();
+    ~LogerProxy();
     void log(const char* str) override;
 public:
+    /**
+     *  Delete the ILoger object.
+     */
+    static void destroy();
+    /**
+     *  Print log.
+     *
+     *  @param str A formate string.
+     *  @param ... Some params.
+     */
     static void printf(const char* str,...);
+    /**
+     *  Set a custom log.
+     *
+     *  @param loger A custom log.
+     */
     static void setLoger(ILoger* loger);
 };
 #endif /* defined(__testproject__LogerProxy__) */

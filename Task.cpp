@@ -38,12 +38,10 @@ void Task::start(){
         _thread->detach();
     }
 }
-/**
- *  Description
- */
 void Task::cancel(){
     _isCancel = true;
 }
+
 void Task::setName(const std::string &name){
     _name = name;
 }

@@ -15,7 +15,15 @@ private:
 public:
     Wave();
     ~Wave();
+    /**
+     *  Add task to the wave.
+     *
+     *  @param task
+     */
     void addTask(Task* task);
+    /**
+     *  Start wave.
+     */
     void start();
 };
 #endif /* defined(__testproject__Wave__) */
