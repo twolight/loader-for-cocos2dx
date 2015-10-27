@@ -24,24 +24,18 @@ Task::~Task(){
     }
 }
 void Task::start(){
-    if(!_isCancel){
-        _statu = Statu::RUNNING;
-        _thread = new std::thread([this](){
-            struct timeval start, end;
-            gettimeofday(&start, nullptr);
-            _runnable();
-            gettimeofday(&end, nullptr);
-            LogerProxy::printf("%s runs: %d millis",getName().c_str(),
-                               (long long)(end.tv_sec-start.tv_sec)*1000+(end.tv_usec-start.tv_usec)/1000);
-            _doneSignal->countDown();
-        });
-        _thread->detach();
-    }
+    _statu = Statu::RUNNING;
+    _thread = new std::thread([this](){
+        struct timeval start, end;
+        gettimeofday(&start, nullptr);
+        _runnable();
+        gettimeofday(&end, nullptr);
+        LogerProxy::printf("%s runs: %d millis",getName().c_str(),
+                           (long long)(end.tv_sec-start.tv_sec)*1000+(end.tv_usec-start.tv_usec)/1000);
+        _doneSignal->countDown();
+    });
+    _thread->detach();
 }
-void Task::cancel(){
-    _isCancel = true;
-}
-
 void Task::setName(const std::string &name){
     _name = name;
 }

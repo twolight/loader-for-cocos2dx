@@ -37,11 +37,11 @@ public:
     Loader* addTask(Task* task,unsigned wave);
     
     /**
-     *  Cancel a task by taskName.
+     *  Cancel a wave by index.
      *
-     *  @param TaskId Task ID.
+     *  @param waveIndex Wave index.
      */
-    void cancelTask(const std::string& taskName);
+    void cancelWave(int waveIndex);
     
     /**
      *  Loader start.

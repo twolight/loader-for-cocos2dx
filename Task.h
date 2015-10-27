@@ -27,10 +27,6 @@ public:
      */
     void start();
     /**
-     *  Cancel task
-     */
-    void cancel();
-    /**
      *  Set a unique name for task
      *
      *  @param name Name string.
