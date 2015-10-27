@@ -21,6 +21,9 @@ private:
     ~Loader();
 public:
     static Loader* getInstance();
+    /**
+     *  Destory loader object and release the resource.
+     */
     static void destroy();
     /**
      *  Add a task to Loader.
@@ -44,7 +47,15 @@ public:
      *  Loader start.
      */
     void clearTask();
+    /**
+     *  Loader start work.
+     */
     void start();
+    /**
+     *  Set a loger
+     *
+     *  @param loger A custom loger.
+     */
     void setLoger(ILoger* loger);
     
    

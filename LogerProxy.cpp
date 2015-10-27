@@ -12,6 +12,8 @@ ILoger* LogerProxy::_logerImpl = nullptr;
 LogerProxy::LogerProxy(){
 
 }
+LogerProxy::~LogerProxy(){
+}
 void LogerProxy::setLoger(ILoger* loger){
     _loger = loger;
 }
@@ -37,7 +39,7 @@ void LogerProxy::printf(const char* formate,...){
 void LogerProxy::log(const char* str){
     std::printf("%s\r\n",str);
 }
-void LogerProxy::release(){
+void LogerProxy::destroy(){
     if(_loger){
         delete _loger;
     }

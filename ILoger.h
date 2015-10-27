@@ -12,6 +12,11 @@
 class ILoger{
 public:
     virtual ~ILoger(){};
+    /**
+     *  If want to provide a loger,must override the log method.
+     *
+     *  @param str String will be print.
+     */
     virtual void log(const char* str) = 0;
 };
 #endif /* defined(__testproject__ILoger__) */

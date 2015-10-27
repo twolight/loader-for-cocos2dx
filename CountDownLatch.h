@@ -18,6 +18,9 @@ public:
     CountDownLatch(int count);
     void countDown();
     int getCount();
+    /**
+     *  Current thread wait until _count equal 0.
+     */
     void wait();
 };
 #endif /* defined(__testproject__CountDownLatch__) */
