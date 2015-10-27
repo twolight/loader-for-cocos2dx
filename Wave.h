@@ -12,6 +12,7 @@
 class Wave{
 private:
     std::vector<Task*> _tasks;
+    bool _isCancel;
 public:
     Wave();
     ~Wave();
@@ -25,5 +26,9 @@ public:
      *  Start wave.
      */
     void start();
+    /**
+     *  Cancel wave.
+     */
+    void cancel();
 };
 #endif /* defined(__testproject__Wave__) */

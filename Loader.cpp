@@ -50,9 +50,11 @@ Loader* Loader::addTask(Task* task,unsigned waveIndex){
     }
     return this;
 }
-void Loader::cancelTask(const std::string& taskName){
-    //
-    
+void Loader::cancelWave(int waveIndex){
+    auto iterator = _waves.find(waveIndex);
+    if(iterator != _waves.end()){
+        iterator->second->cancel();
+    }
 }
 
 void Loader::clearTask(){
