@@ -12,11 +12,14 @@
 #include "ILoger.h"
 #include <vector>
 #include <string>
+#include <future>
 class Loader{
 private:
     static Loader* _instance;
     std::map<int,Wave*> _waves;
     Statu _statu;
+    bool _autoDestroy;
+    std::future<void> _future;
     Loader();
     ~Loader();
 public:
@@ -57,7 +60,18 @@ public:
      *  @param loger A custom loger.
      */
     void setLoger(ILoger* loger);
-    
+    /**
+     *  Get Loader's statu.
+     *
+     *  @return Loader's statu.
+     */
+    Statu getStatu();
+    /**
+     *  Set Loader whether is destroyed by itself after has done.
+     *
+     *  @param autoDestroy
+     */
+    void setAutoDestroy(bool autoDestroy);
    
     
 };

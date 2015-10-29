@@ -8,7 +8,6 @@
 
 #include "Loader.h"
 #include "LogerProxy.h"
-#include <future>
 using namespace std;
 Loader* Loader::_instance = nullptr;
 Loader* Loader::getInstance(){
@@ -19,12 +18,16 @@ Loader* Loader::getInstance(){
 }
 void Loader::destroy(){
     if(_instance){
+        if(_instance->_statu == Statu::RUNNING){
+            _instance->_future.get();//Waiting for task done
+        }
         delete _instance;
+        LogerProxy::destroy();
     }
-    LogerProxy::destroy();
 }
 Loader::Loader():
-_statu(Statu::PENDING){
+_statu(Statu::PENDING),
+_autoDestroy(false){
     
 }
 Loader::~Loader(){
@@ -72,17 +75,23 @@ void Loader::start(){
         return;
     }
     _statu = Statu::RUNNING;
-    std::future<bool> result = std::async(std::launch::async,[this](){
+    _future = std::async(std::launch::async,[this](){
         for(auto& wave : _waves){
             wave.second->start();
         }
-        return true;
+        _statu = Statu::COMPLETE;
+        if(_autoDestroy){
+            destroy();
+        }
     });
-//    if(result.get()){
-//        //Loader load done.
-//    }
-    _statu = Statu::COMPLETE;
+    
 }
 void Loader::setLoger(ILoger* loger){
     LogerProxy::setLoger(loger);
+}
+Statu Loader::getStatu(){
+    return _statu;
+}
+void Loader::setAutoDestroy(bool autoDestroy){
+    _autoDestroy = autoDestroy;
 }
