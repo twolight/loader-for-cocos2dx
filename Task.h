@@ -1,6 +1,6 @@
 //
 //  Task.h
-//  testproject
+//  loader-for-cocos2dx
 //
 //  Created by twolight on 15-10-22.
 //
