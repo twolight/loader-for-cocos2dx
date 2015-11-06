@@ -18,3 +18,5 @@ A init loader for cocos2dx(c++),also can be used in a c++ project.
   }), 3);
   loader->start();
 ```
+#Contact
+Welocme to send pull request.please contact twolight@163.com
